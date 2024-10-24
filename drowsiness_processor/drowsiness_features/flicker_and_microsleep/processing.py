@@ -146,6 +146,7 @@ class FlickerEstimator(DrowsinessProcessor):
         closed_eyes = self.micro_sleep_detector.closed_eyes(eyes_distance)
         is_micro_sleep, duration_micro_sleep = self.micro_sleep_detector.detect(closed_eyes)
         if is_micro_sleep:
+            print("enviando alarmaw...")
             self.micro_sleep_counter.increment(duration_micro_sleep)
 
         micro_sleep = self.micro_sleep_counter.micro_sleep_count

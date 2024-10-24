@@ -93,6 +93,7 @@ class YawnEstimator(DrowsinessProcessor):
         open_mouth = self.yawn_detection.check_open_mouth(mouth_points)
         is_yawn, duration_yawn = self.yawn_detection.detect(open_mouth)
         if is_yawn:
+            print("enviando alarmaa...")
             self.yawn_counter.increment(duration_yawn)
 
         if elapsed_time >= 180:

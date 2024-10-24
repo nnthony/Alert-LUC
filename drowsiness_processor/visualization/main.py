@@ -54,7 +54,7 @@ class ReportVisualizer:
             return 0, 0, 255
         elif report_status == 'normal':
             return 0, 255, 0
-
+    
     def draw_report_text(self, sketch: np.ndarray, text: str, position: Tuple[int, int], color: Tuple[int, int, int]):
         cv2.putText(sketch, text, position, cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 1)
 
@@ -66,7 +66,7 @@ class ReportVisualizer:
                 self.draw_report_text(sketch,
                                       f"evaluating: {feature.replace('_', ' ')}: stay alert",
                                       position, color)
-
+                
             if feature == 'pitch':
                 self.draw_report_text(sketch,
                                       f"evaluating: {feature.replace('_', ' ')}: stay alert",
@@ -91,6 +91,7 @@ class ReportVisualizer:
                                       f"counting: {feature.replace('_', ' ')}: {180 - elapsed_time} seconds remaining",
                                       position, color)
 
+    
     def draw_warnings_report(self, sketch: np.ndarray, feature: str):
         position = self.coordinates[feature]
         feature_count = self.visualize_reports[feature]['count']
@@ -131,7 +132,7 @@ class ReportVisualizer:
                 top_left = (position[0] - 10, position[1] - 20)
                 bottom_right = (position[0] + text_width + 20, position[1] + text_height + 20 * (len(feature_durations) + 1))
                 self.draw_rectangle(sketch, top_left, bottom_right, color)
-                self.update_coordinates(feature, (10, bottom_right[1]))
+                self.update_coordinates(feature, (10, bottom_right[1]))               
 
     def update_coordinates(self, feature: str, new_coordinates: tuple[int, int]):
         keys = list(self.coordinates.keys())
