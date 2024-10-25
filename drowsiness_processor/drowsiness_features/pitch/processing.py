@@ -98,6 +98,7 @@ class PitchEstimator(DrowsinessProcessor):
         head_down, head_position = self.pitch_detection.check_head_down(head_points)
         is_pitch, duration_pitch = self.pitch_detection.detect(head_down)
         if is_pitch:
+            print("enviando alarma de cabeceo...")
             self.pitch_counter.increment(duration_pitch)
 
         if is_pitch:
