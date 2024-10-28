@@ -34,6 +34,8 @@ class MicroSleepDetection(Detector):
         self.end_time: float = 0
         self.flag: bool = False
         self.close_eyes: bool = False
+        self.acum_time: float = 0
+        self.flag_alarm: bool = False
 
     def closed_eyes(self, eyes_distance: dict) -> bool:
         right_eyelid_upper = eyes_distance['right_upper_eyelid_distance']
@@ -48,6 +50,16 @@ class MicroSleepDetection(Detector):
         return self.close_eyes
 
     def detect(self, is_eyes_closed: bool) -> Tuple[bool, float]:
+        if is_eyes_closed and self.flag and not self.flag_alarm:
+            self.acum_time= time.time() - self.start_time
+            if self.acum_time >=3 and self.acum_time<4:
+                print("enviando alarma de microsueño------------", self.acum_time)
+                self.flag_alarm = True
+                self.acum_time= 0       
+        elif not is_eyes_closed and not self.flag and self.flag_alarm:
+            self.acum_time= 0
+            self.flag_alarm = False
+        
         if is_eyes_closed and not self.flag:
             self.start_time = time.time()
             self.flag = True
@@ -60,7 +72,6 @@ class MicroSleepDetection(Detector):
                 self.end_time = 0
                 return True, flicker_duration
         return False, 0.0
-
 
 class FlickerCounter:
     def __init__(self):
@@ -134,19 +145,18 @@ class FlickerEstimator(DrowsinessProcessor):
         self.flicker_report_generator = FlickerReportGenerator()
         self.micro_sleep_report_generator = MicroSleepReportGenerator()
         self.start_report = time.time()
-
+###♥5♥5O###
     def process(self, eyes_distance: dict):
         current_time = time.time()
         elapsed_time = round(current_time - self.start_report, 0)
-
+        
         is_flicker = self.flicker_detector.detect(eyes_distance)
         if is_flicker:
             self.flicker_counter.increment()
-
         closed_eyes = self.micro_sleep_detector.closed_eyes(eyes_distance)
         is_micro_sleep, duration_micro_sleep = self.micro_sleep_detector.detect(closed_eyes)
         if is_micro_sleep:
-            print("enviando alarma de microsueño...")
+            print("----Termino de microsueño...")
             self.micro_sleep_counter.increment(duration_micro_sleep)
 
         micro_sleep = self.micro_sleep_counter.micro_sleep_count
