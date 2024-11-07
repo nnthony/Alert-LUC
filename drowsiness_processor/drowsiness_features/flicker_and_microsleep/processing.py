@@ -145,7 +145,7 @@ class FlickerEstimator(DrowsinessProcessor):
         self.flicker_report_generator = FlickerReportGenerator()
         self.micro_sleep_report_generator = MicroSleepReportGenerator()
         self.start_report = time.time()
-###♥5♥5O###
+
     def process(self, eyes_distance: dict):
         current_time = time.time()
         elapsed_time = round(current_time - self.start_report, 0)

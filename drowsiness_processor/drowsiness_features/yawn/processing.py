@@ -74,7 +74,7 @@ class YawnReportGenerator(ReportGenerator):
         return {
             'yawn_count': yawn_count,
             'yawn_durations': yawn_durations,
-            'report_message': f'Counting yawns... {180 - elapsed_time} seconds remaining.',
+            'report_message': f'Counting yawns... {60 - elapsed_time} seconds remaining.',
             'yawn_report': yawn_report
         }
 
@@ -96,7 +96,7 @@ class YawnEstimator(DrowsinessProcessor):
             print("enviando alarmaa de bostezo...")
             self.yawn_counter.increment(duration_yawn)
 
-        if elapsed_time >= 180:
+        if elapsed_time >= 60:
             yawn_data = {
                 "yawn_count": self.yawn_counter.yawn_count,
                 "yawn_durations": self.yawn_counter.get_durations(),
@@ -108,6 +108,6 @@ class YawnEstimator(DrowsinessProcessor):
             return self.yawn_report_generator.generate_report(yawn_data)
 
         return {
-            'yawn_count': f'Counting yawns... {180 - elapsed_time} seconds remaining.',
+            'yawn_count': f'Counting yawns... {60 - elapsed_time} seconds remaining.',
             'yawn_report': False
         }

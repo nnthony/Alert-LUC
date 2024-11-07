@@ -78,7 +78,7 @@ class ReportVisualizer:
 
             if feature == 'eye_rub_first_hand' or feature == 'eye_rub_second_hand':
                 self.draw_report_text(sketch,
-                                      f"counting: {feature.replace('_', ' ')}: {300 - elapsed_time} seconds remaining",
+                                      f"counting: {feature.replace('_', ' ')}: {60 - elapsed_time} seconds remaining",
                                       position, color)
 
             if feature == 'flicker':
@@ -88,7 +88,7 @@ class ReportVisualizer:
 
             if feature == 'yawn':
                 self.draw_report_text(sketch,
-                                      f"counting: {feature.replace('_', ' ')}: {180 - elapsed_time} seconds remaining",
+                                      f"counting: {feature.replace('_', ' ')}: {60 - elapsed_time} seconds remaining",
                                       position, color)
 
     
@@ -100,11 +100,14 @@ class ReportVisualizer:
         if feature == 'micro_sleep' or feature == 'pitch':
             if feature_count >= warning_threshold:
                 color = self.get_color('alarm')
+                print("NUEVA ALARMAR MICROSLEEP1")
         else:
             if feature_count > warning_threshold:
                 color = self.get_color('warning')
+                print("NUEVA ALARMAR MICROSLEEP2")
             else:
                 color = self.get_color('normal')
+                print("NUEVA ALARMAR MICROSLEEP3")
 
         self.draw_report_text(sketch, f"{feature.replace('_', ' ')} {feature}: {feature_count}", position, color)
 
