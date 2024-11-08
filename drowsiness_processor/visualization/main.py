@@ -100,14 +100,11 @@ class ReportVisualizer:
         if feature == 'micro_sleep' or feature == 'pitch':
             if feature_count >= warning_threshold:
                 color = self.get_color('alarm')
-                print("NUEVA ALARMAR MICROSLEEP1")
         else:
             if feature_count > warning_threshold:
                 color = self.get_color('warning')
-                print("NUEVA ALARMAR MICROSLEEP2")
             else:
                 color = self.get_color('normal')
-                print("NUEVA ALARMAR MICROSLEEP3")
 
         self.draw_report_text(sketch, f"{feature.replace('_', ' ')} {feature}: {feature_count}", position, color)
 
@@ -167,7 +164,7 @@ class ReportVisualizer:
         # first hand
         self.update_report('eye_rub_first_hand', report_data['eye_rub_first_hand'])
         if self.visualize_reports['eye_rub_first_hand']['report']:
-            self.draw_warnings_report(sketch, 'eye_rub_first_hand')
+            self.draw_warnings_report(sketch, 'eye_rub_first_hand') 
         else:
             self.draw_warnings_general(sketch, 'eye_rub_first_hand')
 

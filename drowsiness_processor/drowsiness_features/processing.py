@@ -22,7 +22,7 @@ class FeaturesDrowsinessProcessing:
             'yawn': None
         }
 
-    def main(self, distances: dict):
+    def main(self, distances: dict): # Llamada en frameprocesing()
         self.processed_feature['eye_rub_first_hand'] = None
         self.processed_feature['eye_rub_second_hand'] = None
         if 'first_hand' in distances:

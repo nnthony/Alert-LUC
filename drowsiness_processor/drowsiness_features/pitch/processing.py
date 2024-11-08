@@ -2,6 +2,7 @@ import time
 from typing import Tuple, Dict, Any
 from abc import ABC, abstractmethod
 from drowsiness_processor.drowsiness_features.processor import DrowsinessProcessor
+from drowsiness_processor.reports.main import DrowsinessReports
 
 
 class Detector(ABC):
@@ -97,9 +98,20 @@ class PitchEstimator(DrowsinessProcessor):
     def process(self, head_points: dict):
         head_down, head_position = self.pitch_detection.check_head_down(head_points)
         is_pitch, duration_pitch = self.pitch_detection.detect(head_down)
+        self.reports = DrowsinessReports(
+            file_name='drowsiness_processor/reports/august/drowsiness_report.csv',
+            detailed_file_name='drowsiness_processor/reports/august/detailed_report.csv'
+        )
+
         if is_pitch:
             print("enviando alarma de cabeceo...")
             self.pitch_counter.increment(duration_pitch)
+            event_data = {
+                'pitch_report': True,
+                'pitch_durations': duration_pitch
+            }
+
+            self.reports.add_detailed_event(event_data)
 
         if is_pitch:
             pitch_data = {

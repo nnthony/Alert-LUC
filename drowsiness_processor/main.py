@@ -12,13 +12,14 @@ class DrowsinessDetectionSystem:
         self.points_processing = PointsProcessing()
         self.features_processing = FeaturesDrowsinessProcessing()
         self.visualizer = ReportVisualizer()
-        self.reports = DrowsinessReports('drowsiness_processor/reports/august/drowsiness_report.csv')
+        self.reports = DrowsinessReports('drowsiness_processor/reports/august/drowsiness_report.csv', 
+                                         'drowsiness_processor/reports/august/detailed_report.csv')
 
     def frame_processing(self, face_image: np.ndarray):
         key_points, control_process, sketch = self.points_extractor.process(face_image)
         if control_process:
             points_processed = self.points_processing.main(key_points)
-            drowsiness_features_processed = self.features_processing.main(points_processed)
+            drowsiness_features_processed = self.features_processing.main(points_processed) # FeaturesDrowsinessProcessing()
             sketch = self.visualizer.visualize_all_reports(sketch, drowsiness_features_processed)
-            self.reports.main(drowsiness_features_processed)
+            self.reports.main(drowsiness_features_processed) # DrowsinessReports('archivo.csv')
         return face_image, sketch

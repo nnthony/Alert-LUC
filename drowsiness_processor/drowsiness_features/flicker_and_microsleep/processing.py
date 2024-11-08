@@ -2,6 +2,7 @@ import time
 from typing import Tuple, Dict, Any
 from abc import ABC, abstractmethod
 from drowsiness_processor.drowsiness_features.processor import DrowsinessProcessor
+from drowsiness_processor.reports.main import DrowsinessReports
 
 
 class Detector(ABC):
@@ -146,6 +147,11 @@ class FlickerEstimator(DrowsinessProcessor):
         self.micro_sleep_report_generator = MicroSleepReportGenerator()
         self.start_report = time.time()
 
+        self.reports = DrowsinessReports(
+            file_name='drowsiness_processor/reports/august/drowsiness_report.csv',
+            detailed_file_name='drowsiness_processor/reports/august/detailed_report.csv'
+        )
+
     def process(self, eyes_distance: dict):
         current_time = time.time()
         elapsed_time = round(current_time - self.start_report, 0)
@@ -158,6 +164,13 @@ class FlickerEstimator(DrowsinessProcessor):
         if is_micro_sleep:
             print("----Termino de microsueño...")
             self.micro_sleep_counter.increment(duration_micro_sleep)
+            event_data = {
+                'micro_sleep_report': True,
+                'micro_sleep_durations': duration_micro_sleep
+            }
+
+            # Llamar a la función para agregar el evento al archivo detallado
+            self.reports.add_detailed_event(event_data)
 
         micro_sleep = self.micro_sleep_counter.micro_sleep_count
 

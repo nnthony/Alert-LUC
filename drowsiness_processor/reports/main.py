@@ -4,8 +4,9 @@ from datetime import datetime
 
 
 class DrowsinessReports:
-    def __init__(self, file_name: str):
+    def __init__(self, file_name: str, detailed_file_name: str):
         self.file_name = file_name
+        self.detailed_file_name = detailed_file_name
         self.fields = ['timestamp', 'eye_rub_first_hand_report', 'eye_rub_first_hand_count',
                        'eye_rub_first_hand_durations', '|',
                        'eye_rub_second_hand_report', 'eye_rub_second_hand_count', 'eye_rub_second_hand_durations', '|',
@@ -13,16 +14,28 @@ class DrowsinessReports:
                        'micro_sleep_report', 'micro_sleep_count', 'micro_sleep_durations', '|',
                        'pitch_report', 'pitch_count', 'pitch_durations', '|',
                        'yawn_report', 'yawn_count', 'yawn_durations']
+        
+        self.detailed_fields = [
+            'timestamp',
+            'eye_rub_first_hand_report', 'eye_rub_first_hand_durations',
+            'eye_rub_second_hand_report', 'eye_rub_second_hand_durations',
+            'micro_sleep_report', 'micro_sleep_durations',
+            'pitch_report', 'pitch_durations',
+            'yawn_report', 'yawn_durations'
+        ]
 
         if not os.path.exists(self.file_name):
-            self.create_csv_file()
+            self.create_csv_file() 
+        
+        if not os.path.exists(self.detailed_file_name):
+            self.create_csv_file(self.detailed_file_name, self.detailed_fields)
 
-    def create_csv_file(self):
-        with open(self.file_name, mode='w', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=self.fields)
+    def create_csv_file(self, file_name, fields):
+        with open(file_name, mode='w', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=fields)
             writer.writeheader()
 
-    def main(self, report_data: dict):
+    def main(self, report_data: dict): # Llamada desde frameprocesing()
         if (report_data['eye_rub_first_hand']['eye_rub_report'] or
                 report_data['eye_rub_second_hand']['eye_rub_report'] or
                 report_data['flicker_and_micro_sleep']['flicker_report'] or
@@ -57,4 +70,25 @@ class DrowsinessReports:
 
             with open(self.file_name, mode='a', newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=self.fields)
+                writer.writerow(row)
+
+    def add_detailed_event(self, event_data: dict):
+            """Agrega un evento específico a detailed_report.csv."""
+            row = {
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'eye_rub_first_hand_report': event_data.get('eye_rub_first_hand_report', False),
+                'eye_rub_first_hand_durations': event_data.get('eye_rub_first_hand_durations', None),
+                'eye_rub_second_hand_report': event_data.get('eye_rub_second_hand_report', False),
+                'eye_rub_second_hand_durations': event_data.get('eye_rub_second_hand_durations', None),
+                'micro_sleep_report': event_data.get('micro_sleep_report', False),
+                'micro_sleep_durations': event_data.get('micro_sleep_durations', None),
+                'pitch_report': event_data.get('pitch_report', False),
+                'pitch_durations': event_data.get('pitch_durations', None),
+                'yawn_report': event_data.get('yawn_report', False),
+                'yawn_durations': event_data.get('yawn_durations', None)
+            }
+
+            # Escribir en detailed_report.csv
+            with open(self.detailed_file_name, mode='a', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=self.detailed_fields)
                 writer.writerow(row)

@@ -2,7 +2,7 @@ import time
 from typing import Tuple, Dict, Any
 from abc import ABC, abstractmethod
 from drowsiness_processor.drowsiness_features.processor import DrowsinessProcessor
-
+from drowsiness_processor.reports.main import DrowsinessReports
 
 class Detector(ABC):
     @abstractmethod
@@ -83,6 +83,10 @@ class EyeRubEstimator(DrowsinessProcessor):
         self.eye_rub_counter_left = EyeRubCounter()
         self.eye_rub_report_generator = EyeRubReportGenerator()
         self.start_report = time.time()
+        self.reports = DrowsinessReports(
+            file_name='drowsiness_processor/reports/august/drowsiness_report.csv',
+            detailed_file_name='drowsiness_processor/reports/august/detailed_report.csv'
+        )
 
     def process(self, hands_points: dict):
         current_time = time.time()
@@ -96,8 +100,20 @@ class EyeRubEstimator(DrowsinessProcessor):
 
         if is_eye_rub_right:
             self.eye_rub_counter_right.increment(duration_eye_rub_right, 'right')
+            event_data = {
+                'eye_rub_first_hand_report': True,
+                'eye_rub_first_hand_durations': duration_eye_rub_right
+            }
+            self.reports.add_detailed_event(event_data)
+            print("rub right")
         if is_eye_rub_left:
             self.eye_rub_counter_left.increment(duration_eye_rub_left, 'left')
+            event_data = {
+                'eye_rub_second_hand_report': True,
+                'eye_rub_second_hand_durations': duration_eye_rub_left
+            }
+            self.reports.add_detailed_event(event_data)
+            print("rub left")
 
         if elapsed_time >= 60:
             eye_rub_data = {
