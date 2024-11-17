@@ -25,7 +25,7 @@ class DrowsinessReports:
         ]
 
         if not os.path.exists(self.file_name):
-            self.create_csv_file() 
+            self.create_csv_file(self.file_name, self.file_name) 
         
         if not os.path.exists(self.detailed_file_name):
             self.create_csv_file(self.detailed_file_name, self.detailed_fields)
