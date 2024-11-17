@@ -1,0 +1,4 @@
+timestamp,eye_rub_first_hand_report,eye_rub_first_hand_durations,eye_rub_second_hand_report,eye_rub_second_hand_durations,micro_sleep_report,micro_sleep_durations,pitch_report,pitch_durations,yawn_report,yawn_durations
+2024-11-16 21:02:52,False,,False,,False,,True,1.0,False,
+2024-11-16 21:02:57,False,,False,,False,,True,1.0,False,
+2024-11-16 21:04:26,False,,False,,False,,True,1.0,False,
