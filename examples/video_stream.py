@@ -37,8 +37,8 @@ class VideoStream:
 
 if __name__ == "__main__":
     # Cambia el índice a 0 para usar la cámara predeterminada
-    #camera = Camera(0, 1280, 720)  # Para usar la cámara
-    camera = Camera("examples/video1480003022.mp4", 1280, 720)  # Para video
+    camera = Camera(0, 1280, 720)  # Para usar la cámara
+    #camera = Camera("examples/video1480003022.mp4", 1280, 720)  # Para video
 
     # Inicializar el sistema de detección de somnolencia
     emotion_recognition_system = DrowsinessDetectionSystem()
