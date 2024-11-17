@@ -35,7 +35,7 @@ class YawnDetection(Detector):
             self.end_time = time.time()
             yawn_duration = round(self.end_time - self.start_time, 0)
             self.flag = False
-            if yawn_duration > 4:
+            if yawn_duration > 2.5:
                 self.start_time = 0
                 self.end_time = 0
                 return True, yawn_duration

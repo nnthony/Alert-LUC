@@ -21,7 +21,7 @@ class VideoStream:
                 frame, sketch = self.drowsiness_detection_system.frame_processing(frame)
 
                 # Mostrar el frame procesado y el boceto
-                cv2.imshow('Emotion Recognition', frame)
+                cv2.imshow('Camera', frame)
                 cv2.imshow('3D sketch image', sketch)
 
                 # Salir si se presiona 'Esc'
@@ -29,6 +29,7 @@ class VideoStream:
                     break
             else:
                 print("No se pudo leer el frame. Asegúrate de que la cámara esté conectada.")
+                break
 
         self.camera.release()
         cv2.destroyAllWindows()
@@ -36,8 +37,8 @@ class VideoStream:
 
 if __name__ == "__main__":
     # Cambia el índice a 0 para usar la cámara predeterminada
-    camera = Camera(0, 1280, 720)  # Para usar la cámara
-    # camera = Camera("examples/video_example.mp4", 1280, 720)  # Para video
+    #camera = Camera(0, 1280, 720)  # Para usar la cámara
+    camera = Camera("examples/video1480003022.mp4", 1280, 720)  # Para video
 
     # Inicializar el sistema de detección de somnolencia
     emotion_recognition_system = DrowsinessDetectionSystem()

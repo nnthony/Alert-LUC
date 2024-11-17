@@ -64,12 +64,12 @@ class ReportVisualizer:
         if feature == 'micro_sleep' or feature == 'pitch':
             if feature == 'micro_sleep':
                 self.draw_report_text(sketch,
-                                      f"evaluating: {feature.replace('_', ' ')}: stay alert",
+                                      f"evaluando: {feature.replace('_', ' ')}: mantengase alerta",
                                       position, color)
                 
             if feature == 'pitch':
                 self.draw_report_text(sketch,
-                                      f"evaluating: {feature.replace('_', ' ')}: stay alert",
+                                      f"evaluando: {feature.replace('_', ' ')}: mantengase alerta",
                                       position, color)
         else:
             current_time = time.time()
@@ -78,17 +78,17 @@ class ReportVisualizer:
 
             if feature == 'eye_rub_first_hand' or feature == 'eye_rub_second_hand':
                 self.draw_report_text(sketch,
-                                      f"counting: {feature.replace('_', ' ')}: {60 - elapsed_time} seconds remaining",
+                                      f"contando: {feature.replace('_', ' ')}: {60 - elapsed_time} segundos restantes",
                                       position, color)
 
             if feature == 'flicker':
                 self.draw_report_text(sketch,
-                                      f"counting: {feature.replace('_', ' ')}: {60 - elapsed_time} seconds remaining",
+                                      f"contando: {feature.replace('_', ' ')}: {60 - elapsed_time} segundos restantes",
                                       position, color)
 
             if feature == 'yawn':
                 self.draw_report_text(sketch,
-                                      f"counting: {feature.replace('_', ' ')}: {60 - elapsed_time} seconds remaining",
+                                      f"contando: {feature.replace('_', ' ')}: {60 - elapsed_time} segundos restantes",
                                       position, color)
 
     
@@ -109,7 +109,7 @@ class ReportVisualizer:
         self.draw_report_text(sketch, f"{feature.replace('_', ' ')} {feature}: {feature_count}", position, color)
 
         if feature == 'flicker':
-            text = f"{feature.replace('_', ' ')} {feature}: {feature_count}"
+            text = f"{feature.replace('_', ' ')} pestañeos: {feature_count}"
             text_size, _ = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
             text_width, text_height = text_size
             top_left = (position[0] - 10, position[1] - 20)
@@ -122,7 +122,7 @@ class ReportVisualizer:
 
             y_offset = position[1] + 30
             for i, duration in enumerate(feature_durations):
-                self.draw_report_text(sketch, f"#{i + 1}: {duration} sec", (position[0], y_offset), color)
+                self.draw_report_text(sketch, f"#{i + 1}: {duration} segundos", (position[0], y_offset), color)
                 y_offset += 20
 
                 text = f"#{i + 1}: {duration} sec"

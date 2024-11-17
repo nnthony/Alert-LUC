@@ -45,7 +45,7 @@ class PitchDetection(Detector):
             self.end_time = time.time()
             pitch_duration = round(self.end_time - self.start_time, 0)
             self.flag = False
-            if pitch_duration >= 3.0:
+            if pitch_duration >= 0.8:
                 self.start_time = 0
                 self.end_time = 0
                 return True, pitch_duration
