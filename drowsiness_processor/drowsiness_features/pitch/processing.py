@@ -3,7 +3,8 @@ from typing import Tuple, Dict, Any
 from abc import ABC, abstractmethod
 from drowsiness_processor.drowsiness_features.processor import DrowsinessProcessor
 from drowsiness_processor.reports.main import DrowsinessReports
-
+import serial
+import time
 
 class Detector(ABC):
     @abstractmethod
@@ -105,6 +106,9 @@ class PitchEstimator(DrowsinessProcessor):
 
         if is_pitch:
             print("enviando alarma de cabeceo...")
+            arduino = serial.Serial('COM7', 9600)  # Cambia 'COM3' por el puerto adecuado en tu sistema
+            time.sleep(2)
+            arduino.write(b'1') 
             self.pitch_counter.increment(duration_pitch)
             event_data = {
                 'pitch_report': True,
