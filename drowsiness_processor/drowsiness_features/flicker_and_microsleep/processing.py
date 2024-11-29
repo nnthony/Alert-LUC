@@ -3,7 +3,8 @@ from typing import Tuple, Dict, Any
 from abc import ABC, abstractmethod
 from drowsiness_processor.drowsiness_features.processor import DrowsinessProcessor
 from drowsiness_processor.reports.main import DrowsinessReports
-
+import time
+import serial
 
 class Detector(ABC):
     @abstractmethod
@@ -55,6 +56,9 @@ class MicroSleepDetection(Detector):
             self.acum_time= time.time() - self.start_time
             if self.acum_time >=3 and self.acum_time<4:
                 print("enviando alarma de microsueño------------", self.acum_time)
+                arduino = serial.Serial('COM7', 9600)  # Cambia 'COM3' por el puerto adecuado en tu sistema
+                time.sleep(2)
+                arduino.write(b'1') 
                 self.flag_alarm = True
                 self.acum_time= 0       
         elif not is_eyes_closed and not self.flag and self.flag_alarm:
