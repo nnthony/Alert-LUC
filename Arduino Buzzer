@@ -1,0 +1,29 @@
+int buzzer = 8;  // Pin donde está conectado el buzzer
+
+void setup() {
+  Serial.begin(9600);  // Inicializar la comunicación serial
+  pinMode(buzzer, OUTPUT);  // Configurar el pin del buzzer como salida
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char data = Serial.read();
+    if (data == '1') {
+      // Primer pitido
+      digitalWrite(buzzer, HIGH);  // Activar el buzzer
+      delay(1500);  // Sonido durante 500 ms
+      digitalWrite(buzzer, LOW);   // Apagar el buzzer
+      delay(500);  // Pausa de 500 ms
+
+      // Segundo pitido
+      digitalWrite(buzzer, HIGH);  // Activar el buzzer
+      delay(1500);  // Sonido durante 500 ms
+      digitalWrite(buzzer, LOW);   // Apagar el buzzer
+
+           // Segundo pitido
+      digitalWrite(buzzer, HIGH);  // Activar el buzzer
+      delay(1500);  // Sonido durante 500 ms
+      digitalWrite(buzzer, LOW);   // Apagar el buzzer
+}
+}
+}
