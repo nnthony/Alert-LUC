@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from drowsiness_processor.drowsiness_features.processor import DrowsinessProcessor
 from drowsiness_processor.reports.main import DrowsinessReports
 
+
 class Detector(ABC):
     @abstractmethod
     def detect(self, mouth_distance: dict) -> bool:
